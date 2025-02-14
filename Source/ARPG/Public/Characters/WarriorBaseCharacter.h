@@ -4,14 +4,36 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "AbilitySystemInterface.h"
 #include "WarriorBaseCharacter.generated.h"
 
+class UWarriorAttributeSet;
+class UWarriorAbilitySystemComponent;
+
 UCLASS()
-class ARPG_API AWarriorBaseCharacter : public ACharacter
+class ARPG_API AWarriorBaseCharacter : public ACharacter, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 
 public:
 	AWarriorBaseCharacter();
+
+	// IAbilitySystemInterface
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+	// IAbilitySystemInterface
+protected:
 	
+	// APawn Interface
+	virtual void PossessedBy(AController* NewController) override;
+	// APawn Interface
+	
+	UPROPERTY(visibleAnywhere, BlueprintReadOnly, Category = "AbilitySystem")
+	UWarriorAbilitySystemComponent* WarriorAbilitySystemComponent;
+
+	UPROPERTY(visibleAnywhere, BlueprintReadOnly, Category = "AbilitySystem")
+	UWarriorAttributeSet* WarriorAttributeSet;
+
+public:
+	FORCEINLINE UWarriorAbilitySystemComponent* GetWarriorAbilitySystemComponent() const { return WarriorAbilitySystemComponent; }
+	FORCEINLINE UWarriorAttributeSet* GetWarriorAttribute() const { return WarriorAttributeSet; }
 };
