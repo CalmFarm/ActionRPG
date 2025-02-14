@@ -6,21 +6,23 @@
 #include "GameFramework/Actor.h"
 #include "WarriorWeaponBase.generated.h"
 
+class UBoxComponent;
+
 UCLASS()
 class ARPG_API AWarriorWeaponBase : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
-	// Sets default values for this actor's properties
 	AWarriorWeaponBase();
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Weapon")
+	UStaticMeshComponent* WeaponMesh;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Weapon")
+	UBoxComponent* WeaponCollisionBox;
 
+public:
+	FORCEINLINE UBoxComponent* GetWeaponCollisionBox() const {return WeaponCollisionBox;}
 };
