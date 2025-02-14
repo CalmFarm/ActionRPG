@@ -74,8 +74,7 @@ void AWarriorHeroCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 void AWarriorHeroCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-
-	Debug::Print(TEXT("Working on Warrior Hero Character"));
+	UE_LOG(LogTemp,Warning,TEXT("AWarriorHeroCharacter::BeginPlay"));
 }
 
 void AWarriorHeroCharacter::Input_Move(const FInputActionValue& InputActionValue)
