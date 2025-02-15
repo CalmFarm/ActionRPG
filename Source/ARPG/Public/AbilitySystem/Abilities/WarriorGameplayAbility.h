@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Abilities/GameplayAbility.h"
+#include "Components/Combat/PawnCombatComponent.h"
 #include "WarriorGameplayAbility.generated.h"
 
 UENUM(BlueprintType)
@@ -29,4 +30,7 @@ protected:
 	
 	UPROPERTY(EditDefaultsOnly, Category="WarriorAbility")
 	EWarriorAbilityActivationPolicy AbilityActivationPolicy = EWarriorAbilityActivationPolicy::OnTriggered;
+
+	UFUNCTION(BlueprintPure, Category="WarriorAbility")
+	UPawnCombatComponent* GetPawnCombatComponentFromActorInfo() const;
 };
