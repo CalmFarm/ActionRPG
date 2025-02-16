@@ -5,8 +5,10 @@
 
 namespace WarriorGameplayTags
 {
-	UE_DEFINE_GAMEPLAY_TAG(InputTgag_Move,"InputTag.Move");
-	UE_DEFINE_GAMEPLAY_TAG(InputTgag_Look,"InputTag.Look");
+	UE_DEFINE_GAMEPLAY_TAG(InputTag_Move,"InputTag.Move");
+	UE_DEFINE_GAMEPLAY_TAG(InputTag_Look,"InputTag.Look");
+	UE_DEFINE_GAMEPLAY_TAG(InputTag_Equip,"InputTag.Equip");
+	UE_DEFINE_GAMEPLAY_TAG(InputTag_UnEquip,"InputTag.UnEquip");
 
 	UE_DEFINE_GAMEPLAY_TAG(Player_Weapon_Axe, "Player.Weapon.Axe");
 }
