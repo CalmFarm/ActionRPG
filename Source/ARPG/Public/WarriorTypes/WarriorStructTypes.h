@@ -2,14 +2,15 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "WarriorStructTypes.generated.h"
 
-/**
- * 
- */
-class ARPG_API WarriorStructTypes
+class UWarriorHeroLinkedAnimInstance;
+
+USTRUCT(BlueprintType)
+struct FWarriorHeroWeaponData
 {
-public:
-	WarriorStructTypes();
-	~WarriorStructTypes();
+	GENERATED_BODY()
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TSubclassOf<UWarriorHeroLinkedAnimInstance> WeaponAnimLayerToLink;
 };
