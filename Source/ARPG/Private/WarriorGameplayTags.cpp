@@ -9,7 +9,11 @@ namespace WarriorGameplayTags
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_Look,"InputTag.Look");
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_Equip,"InputTag.Equip");
 	UE_DEFINE_GAMEPLAY_TAG(InputTag_UnEquip,"InputTag.UnEquip");
-
+	
+	// Player Tags
+	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_Equip_Axe, "Player.Ability.Equip.Axe");
+	UE_DEFINE_GAMEPLAY_TAG(Player_Ability_UnEquip_Axe, "Player.Ability.UnEquip.Axe");
+	
 	UE_DEFINE_GAMEPLAY_TAG(Player_Weapon_Axe, "Player.Weapon.Axe");
 
 	UE_DEFINE_GAMEPLAY_TAG(Player_Event_Equip_Axe, "Player.Event.Equip.Axe");

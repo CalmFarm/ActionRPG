@@ -13,6 +13,9 @@ namespace WarriorGameplayTags
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_UnEquip);
 
 	// Player Tags
+	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_Equip_Axe)
+	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Ability_UnEquip_Axe)
+	
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Weapon_Axe);
 
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Player_Event_Equip_Axe);
