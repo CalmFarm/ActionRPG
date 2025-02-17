@@ -121,7 +121,7 @@ void AWarriorHeroCharacter::Input_Look(const FInputActionValue& InputActionValue
 
 void AWarriorHeroCharacter::Input_AbilityInputPressed(FGameplayTag InInputTag)
 {
-	WarriorAbilitySystemComponent->OnAbilityInputPrseeed(InInputTag);
+	WarriorAbilitySystemComponent->OnAbilityInputPressed(InInputTag);
 }
 
 void AWarriorHeroCharacter::Input_AbilityInputReleased(FGameplayTag InInputTag)
