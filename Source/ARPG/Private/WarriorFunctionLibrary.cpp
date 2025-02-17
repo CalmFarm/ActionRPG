@@ -27,9 +27,9 @@ void UWarriorFunctionLibrary::RemoveGameplayFromActorIfFound(AActor* InActor, FG
 {
 	UWarriorAbilitySystemComponent* ASC = NativeGetWarriorAscFromActor(InActor);
 
-	if (!ASC->HasMatchingGameplayTag(RemoveToAdd))
+	if (ASC->HasMatchingGameplayTag(RemoveToAdd))
 	{
-		ASC->AddLooseGameplayTag(RemoveToAdd);
+		ASC->RemoveLooseGameplayTag(RemoveToAdd);
 	}
 }
 
