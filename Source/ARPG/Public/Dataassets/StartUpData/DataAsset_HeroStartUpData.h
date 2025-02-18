@@ -15,6 +15,7 @@ UCLASS()
 class ARPG_API UDataAsset_HeroStartUpData : public UDataAsset_StartUpDataBase
 {
 	GENERATED_BODY()
+	
 public:
 	virtual void GiveToAbilitySystemComponent(UWarriorAbilitySystemComponent* InASCToGive, int32 ApplyLevel = 1) override;
 

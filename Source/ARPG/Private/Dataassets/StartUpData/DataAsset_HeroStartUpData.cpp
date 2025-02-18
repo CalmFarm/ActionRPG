@@ -1,18 +1,15 @@
 // HS
 
-
 #include "Dataassets/StartUpData/DataAsset_HeroStartUpData.h"
 
 #include "AbilitySystem/WarriorAbilitySystemComponent.h"
-#include "AbilitySystem/Abilities/WarriorGameplayAbility.h"
-
-
+#include "AbilitySystem/Abilities/WarriorHeroGameplayAbility.h"
 
 void UDataAsset_HeroStartUpData::GiveToAbilitySystemComponent(UWarriorAbilitySystemComponent* InASCToGive,
 	int32 ApplyLevel)
 {
 	Super::GiveToAbilitySystemComponent(InASCToGive, ApplyLevel);
-
+	
 	for (const FWarriorHeroAbilitySet& AbilitySet : HeroStartUpAbilitySet)
 	{
 		if (!AbilitySet.IsValid()) continue;
