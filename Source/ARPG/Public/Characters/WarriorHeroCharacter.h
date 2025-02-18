@@ -21,6 +21,10 @@ class ARPG_API AWarriorHeroCharacter : public AWarriorBaseCharacter
 	GENERATED_BODY()
 public:
 	AWarriorHeroCharacter();
+
+	// IPawnCombatInterface
+	virtual UPawnCombatComponent* GetPawnCombatComponent() const override;
+	// IPawnCombatInterface
 	
 protected:
 	// APawn Interface

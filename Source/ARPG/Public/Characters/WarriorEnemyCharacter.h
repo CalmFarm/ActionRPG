@@ -18,6 +18,10 @@ class ARPG_API AWarriorEnemyCharacter : public AWarriorBaseCharacter
 public:
 	AWarriorEnemyCharacter();
 
+	// IPawnCombatInterface
+	virtual UPawnCombatComponent* GetPawnCombatComponent() const override;
+	// IPawnCombatInterface
+
 protected:
 	// APawn Interface
 	virtual void PossessedBy(AController* NewController) override;
