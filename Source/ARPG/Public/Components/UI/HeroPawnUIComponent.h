@@ -13,5 +13,8 @@ UCLASS()
 class ARPG_API UHeroPawnUIComponent : public UPawnUIComponent
 {
 	GENERATED_BODY()
-	
+
+public:
+	UPROPERTY(BlueprintAssignable)
+	FOnPercentChangeDelegate OnCurrentRageChanged;
 };
