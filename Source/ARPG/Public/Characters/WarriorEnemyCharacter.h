@@ -6,6 +6,7 @@
 #include "Characters/WarriorBaseCharacter.h"
 #include "WarriorEnemyCharacter.generated.h"
 
+class UWidgetComponent;
 class UEnemyPawnUIComponent;
 class UEnemyCombatComponent;
 /**
@@ -29,6 +30,9 @@ public:
 	// IPawnUIInterface
 
 protected:
+
+	virtual void BeginPlay() override;
+	
 	// APawn Interface
 	virtual void PossessedBy(AController* NewController) override;
 	// APawn Interface
@@ -37,6 +41,9 @@ protected:
 
 	UPROPERTY(visibleAnywhere, BlueprintReadOnly, Category = "UI")
 	UEnemyPawnUIComponent* EnemyUIComponent;
+
+	UPROPERTY(visibleAnywhere, BlueprintReadOnly, Category = "UI")
+	UWidgetComponent* EnemyHealthWidgetComponent;
 
 private:
 	void InitEnemyStartUpData();
