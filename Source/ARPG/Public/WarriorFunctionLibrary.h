@@ -27,7 +27,7 @@ public:
 	static void AddGameplayTagToActorIfNone(AActor* InActor, FGameplayTag TagToAdd);
 
 	UFUNCTION(BlueprintCallable, Category = "Warrior|FunctionLibrary")
-	static void RemoveGameplayFromActorIfFound(AActor* InActor, FGameplayTag RemoveToAdd);
+	static void RemoveGameplayTagFromActorIfFound(AActor* InActor, FGameplayTag RemoveToAdd);
 
 	static bool NativeDoesActorHaveTag(AActor* InActor, FGameplayTag TagToCheck);
 
