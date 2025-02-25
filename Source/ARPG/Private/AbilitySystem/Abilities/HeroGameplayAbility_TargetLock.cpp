@@ -4,6 +4,8 @@
 #include "AbilitySystem/Abilities/HeroGameplayAbility_TargetLock.h"
 
 #include "WarriorDebugHelper.h"
+#include "WarriorFunctionLibrary.h"
+#include "WarriorGameplayTags.h"
 #include "Blueprint/WidgetLayoutLibrary.h"
 #include "Blueprint/WidgetTree.h"
 #include "Characters/WarriorHeroCharacter.h"
@@ -29,6 +31,18 @@ void UHeroGameplayAbility_TargetLock::EndAbility(const FGameplayAbilitySpecHandl
 	CleanUp();
 	
 	Super::EndAbility(Handle, ActorInfo, ActivationInfo, bReplicateEndAbility, bWasCancelled);
+}
+
+void UHeroGameplayAbility_TargetLock::OnTargetLockTick(float DeltaTime)
+{
+	if (!CurrentLockedActor ||
+		UWarriorFunctionLibrary::NativeDoesActorHaveTag(CurrentLockedActor,WarriorGameplayTags::Shared_Status_Dead) ||
+		UWarriorFunctionLibrary::NativeDoesActorHaveTag(GetHeroCharacterFromActorInfo(), WarriorGameplayTags::Shared_Status_Dead))
+	{
+		return;
+	}
+
+	SetTargetLockWidgetPosition();
 }
 
 void UHeroGameplayAbility_TargetLock::TryLockOnTarget()
@@ -153,4 +167,8 @@ void UHeroGameplayAbility_TargetLock::CleanUp()
 	{
 		DrawnTargetLockWidget->RemoveFromParent();
 	}
+
+	DrawnTargetLockWidget = nullptr;
+
+	TargetLockWidgetSize = FVector2D::ZeroVector;
 }
