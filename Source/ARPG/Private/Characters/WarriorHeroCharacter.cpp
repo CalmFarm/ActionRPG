@@ -156,10 +156,7 @@ void AWarriorHeroCharacter::Input_SwitchTargetCompleted(const FInputActionValue&
 	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(
 		this,
 		SwitchDirection.X>0.f? WarriorGameplayTags::Player_Event_SwitchTarget_Right : WarriorGameplayTags::Player_Event_SwitchTarget_Left,
-		Data
-		);
-
-	Debug::Print(TEXT("Switch Direction : ") + SwitchDirection.ToString());
+		Data);
 }
 
 
