@@ -3,6 +3,7 @@
 
 #include "AbilitySystem/Abilities/HeroGameplayAbility_TargetLock.h"
 
+#include "EnhancedInputSubsystems.h"
 #include "WarriorDebugHelper.h"
 #include "WarriorFunctionLibrary.h"
 #include "WarriorGameplayTags.h"
@@ -23,6 +24,7 @@ void UHeroGameplayAbility_TargetLock::ActivateAbility(const FGameplayAbilitySpec
 {
 	TryLockOnTarget();
 	InitTargetLockMovement();
+	InitTargetLockMappingContext();
 	
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 }
@@ -31,7 +33,8 @@ void UHeroGameplayAbility_TargetLock::EndAbility(const FGameplayAbilitySpecHandl
 	const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
 	bool bReplicateEndAbility, bool bWasCancelled)
 {
-	RestTargetLockMovement();
+	ResetTargetLockMovement();
+	ResetTargetLockMappingContext();
 	CleanUp();
 	
 	Super::EndAbility(Handle, ActorInfo, ActivationInfo, bReplicateEndAbility, bWasCancelled);
@@ -179,6 +182,16 @@ void UHeroGameplayAbility_TargetLock::InitTargetLockMovement()
 	GetHeroCharacterFromActorInfo()->GetCharacterMovement()->MaxWalkSpeed = TargetLockMaxWalkSpeed;
 }
 
+void UHeroGameplayAbility_TargetLock::InitTargetLockMappingContext()
+{
+	const ULocalPlayer* LocalPlayer = GetHeroControllerFromActorInfo()->GetLocalPlayer();
+	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(LocalPlayer);
+
+	check(Subsystem);
+
+	Subsystem->AddMappingContext(TargetLockMappingContext, 3);
+}
+
 
 void UHeroGameplayAbility_TargetLock::CancelTargetLockAbility()
 {
@@ -203,10 +216,26 @@ void UHeroGameplayAbility_TargetLock::CleanUp()
 	CachedDefaultMaxWalkSpeed = 0.f;
 }
 
-void UHeroGameplayAbility_TargetLock::RestTargetLockMovement()
+void UHeroGameplayAbility_TargetLock::ResetTargetLockMovement()
 {
 	if (CachedDefaultMaxWalkSpeed>0.f)
 	{
 		GetHeroCharacterFromActorInfo()->GetCharacterMovement()->MaxWalkSpeed = CachedDefaultMaxWalkSpeed;
 	}
+}
+
+void UHeroGameplayAbility_TargetLock::ResetTargetLockMappingContext()
+{
+	if (!GetHeroControllerFromActorInfo())
+	{
+		return;
+	}
+	
+	const ULocalPlayer* LocalPlayer = GetHeroControllerFromActorInfo()->GetLocalPlayer();
+	
+	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(LocalPlayer);
+
+	check(Subsystem);
+
+	Subsystem->RemoveMappingContext(TargetLockMappingContext);
 }
