@@ -14,6 +14,7 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "Widgets/WarriorWidgetBase.h"
 #include "Controllers/WarriorHeroController.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 
 void UHeroGameplayAbility_TargetLock::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
@@ -21,6 +22,7 @@ void UHeroGameplayAbility_TargetLock::ActivateAbility(const FGameplayAbilitySpec
                                                       const FGameplayEventData* TriggerEventData)
 {
 	TryLockOnTarget();
+	InitTargetLockMovement();
 	
 	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 }
@@ -30,6 +32,7 @@ void UHeroGameplayAbility_TargetLock::EndAbility(const FGameplayAbilitySpecHandl
 	bool bReplicateEndAbility, bool bWasCancelled)
 {
 	CleanUp();
+	RestTargetLockMovement();
 	
 	Super::EndAbility(Handle, ActorInfo, ActivationInfo, bReplicateEndAbility, bWasCancelled);
 }
@@ -169,6 +172,13 @@ void UHeroGameplayAbility_TargetLock::SetTargetLockWidgetPosition()
 	DrawnTargetLockWidget->SetPositionInViewport(ScreenPos, false);
 }
 
+void UHeroGameplayAbility_TargetLock::InitTargetLockMovement()
+{
+	CachedDefaultMaxWalkSpeed = GetHeroCharacterFromActorInfo()->GetCharacterMovement()->MaxWalkSpeed;
+
+	GetHeroCharacterFromActorInfo()->GetCharacterMovement()->MaxWalkSpeed = TargetLockMaxWalkSpeed;
+}
+
 
 void UHeroGameplayAbility_TargetLock::CancelTargetLockAbility()
 {
@@ -189,4 +199,14 @@ void UHeroGameplayAbility_TargetLock::CleanUp()
 	DrawnTargetLockWidget = nullptr;
 
 	TargetLockWidgetSize = FVector2D::ZeroVector;
+
+	CachedDefaultMaxWalkSpeed = 0.f;
+}
+
+void UHeroGameplayAbility_TargetLock::RestTargetLockMovement()
+{
+	if (CachedDefaultMaxWalkSpeed>0.f)
+	{
+		GetHeroCharacterFromActorInfo()->GetCharacterMovement()->MaxWalkSpeed = CachedDefaultMaxWalkSpeed;
+	}
 }
