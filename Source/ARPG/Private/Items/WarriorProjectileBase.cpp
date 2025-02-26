@@ -96,7 +96,6 @@ void AWarriorProjectileBase::HandleApplyProjectileDamage(APawn* InHitPawn, const
 {
 	checkf(ProjectileDamageEffectSpecHandle.IsValid(), TEXT("forgot to assign a valid spec handle to the projectile : %s"), *GetActorNameOrLabel());
 	const bool bWasApplied = UWarriorFunctionLibrary::ApplyGameplayEffectSpecHandleToTargetActor(GetInstigator(), InHitPawn, ProjectileDamageEffectSpecHandle);
-	Debug::Print(*GetActorNameOrLabel());
 
 	if (bWasApplied)
 	{
