@@ -6,6 +6,7 @@
 #include "Characters/WarriorBaseCharacter.h"
 #include "WarriorEnemyCharacter.generated.h"
 
+class UBoxComponent;
 class UWidgetComponent;
 class UEnemyPawnUIComponent;
 class UEnemyCombatComponent;
@@ -36,17 +37,29 @@ protected:
 	// APawn Interface
 	virtual void PossessedBy(AController* NewController) override;
 	// APawn Interface
+	
 	UPROPERTY(visibleAnywhere, BlueprintReadOnly, Category = "Combat")
 	UEnemyCombatComponent* EnemyCombatComponent;
 
+	UPROPERTY(visibleAnywhere, BlueprintReadOnly, Category = "Combat")
+	UBoxComponent* LeftHandCollisionBox;
+
+	UPROPERTY(visibleAnywhere, BlueprintReadOnly, Category = "Combat")
+	UBoxComponent* RightHandCollisionBox;
+	
 	UPROPERTY(visibleAnywhere, BlueprintReadOnly, Category = "UI")
 	UEnemyPawnUIComponent* EnemyUIComponent;
 
 	UPROPERTY(visibleAnywhere, BlueprintReadOnly, Category = "UI")
 	UWidgetComponent* EnemyHealthWidgetComponent;
 
+	UFUNCTION()
+	virtual void OnBodyCollisionBoxBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,  bool bFromSweep, const FHitResult& SweepResult);
+
 private:
 	void InitEnemyStartUpData();
 public:
 	FORCEINLINE UEnemyCombatComponent* GetEnemyCombatComponent() const {return EnemyCombatComponent;}
+	FORCEINLINE UBoxComponent* GetLeftHandCollisionBox() const {return LeftHandCollisionBox;}
+	FORCEINLINE UBoxComponent* GetRightHandCollisionBox() const {return RightHandCollisionBox;}
 };
