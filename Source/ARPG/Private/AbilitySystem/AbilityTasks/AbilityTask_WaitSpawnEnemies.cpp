@@ -4,7 +4,10 @@
 #include "AbilitySystem/AbilityTasks/AbilityTask_WaitSpawnEnemies.h"
 
 #include "AbilitySystemComponent.h"
+#include "NavigationSystem.h"
 #include "WarriorDebugHelper.h"
+#include "Characters/WarriorEnemyCharacter.h"
+#include "Engine/AssetManager.h"
 
 UAbilityTask_WaitSpawnEnemies* UAbilityTask_WaitSpawnEnemies::WaitSpawnEnemies(UGameplayAbility* OwningAbility,
                                                                                FGameplayTag EventTag, TSoftClassPtr<AWarriorEnemyCharacter> SoftEnemyClassToSpawn, int32 NumToSpawn,
@@ -40,7 +43,76 @@ void UAbilityTask_WaitSpawnEnemies::OnDestroy(bool bInOwnerFinished)
 
 void UAbilityTask_WaitSpawnEnemies::OnGameplayEventReceived(const FGameplayEventData* InPayload)
 {
-	Debug::Print(TEXT("Gameplay Event Received!"));
+	if (ensure(!CachedSoftEnemyClassToSpawn.IsNull()))
+	{
+		UAssetManager::Get().GetStreamableManager().RequestAsyncLoad(
+		CachedSoftEnemyClassToSpawn.ToSoftObjectPath(),
+		FStreamableDelegate::CreateUObject(this, &ThisClass::OnEnemyClassLoaded));
+	}
+	else
+	{
+		if (ShouldBroadcastAbilityTaskDelegates())
+		{
+			DidNotSpawn.Broadcast(TArray<AWarriorEnemyCharacter*>());
+		}
+
+		EndTask();
+	}
+}
+
+void UAbilityTask_WaitSpawnEnemies::OnEnemyClassLoaded()
+{
+	UClass* LoadedClass = CachedSoftEnemyClassToSpawn.Get();
+	UWorld* World = GetWorld();
+
+	if (!LoadedClass || !World)
+	{
+		if (ShouldBroadcastAbilityTaskDelegates())
+		{
+			DidNotSpawn.Broadcast(TArray<AWarriorEnemyCharacter*>());
+		}
+
+		EndTask();
+		
+		return;
+	}
+
+	TArray<AWarriorEnemyCharacter*> SpawnEnemies;
+	
+	FActorSpawnParameters SpawnParams;
+	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
+	
+	for (int32 i = 0; i < CachedNumToSpawn; i++)
+	{
+		FVector RandomLocation;
+		UNavigationSystemV1::K2_GetRandomLocationInNavigableRadius(this, CachedSpawnOrigin, RandomLocation, CachedRandomSpawnRadius);
+
+		RandomLocation += FVector(0.f,0.f,150.f);
+		
+		AWarriorEnemyCharacter* SpawnedEnemy = World->SpawnActor<AWarriorEnemyCharacter>(
+			LoadedClass, 
+			RandomLocation, 
+			CachedSpawnRotation, 
+			SpawnParams
+		);
+
+		if (SpawnedEnemy)
+		{
+			SpawnEnemies.Add(SpawnedEnemy);
+		}
+	}
+
+	if (ShouldBroadcastAbilityTaskDelegates())
+	{
+		if (!SpawnEnemies.IsEmpty())
+		{
+			OnSpawnFinished.Broadcast(SpawnEnemies);
+		}
+		else
+		{
+			DidNotSpawn.Broadcast(TArray<AWarriorEnemyCharacter*>());
+		}
+	}
 
 	EndTask();
 }
