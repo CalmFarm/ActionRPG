@@ -8,15 +8,17 @@
 class FWarriorCountDownAction : public FPendingLatentAction
 {
 	public:
-	FWarriorCountDownAction(float InTotalCountTime, float InUpdateInterval, float& InOutRemainingTime,
+	FWarriorCountDownAction(float InTotalCountDownTime, float InUpdateInterval, float& InOutRemainingTime,
 	                        EWarriorCountDownActionOutput& InCountDownOutput, const FLatentActionInfo& LatentInfo)
-		                        : bNeedToCancel(false), TotalCountDownTime(InTotalCountTime),
+		                        : bNeedToCancel(false), TotalCountDownTime(InTotalCountDownTime),
 		                          OutRemainingTime(InOutRemainingTime), CountDownOutput(InCountDownOutput),
 		                          ExecutionFunction(LatentInfo.ExecutionFunction), OutputLink(LatentInfo.Linkage),
 		                          CallbackTarget(LatentInfo.CallbackTarget), ElapsedInterval(0.f),
 		                          ElapsedTimeSinceStart(0.f)
 	{
 	}
+
+	void CancelAction();
 
 private:
 	bool bNeedToCancel;             // 카운트다운을 취소해야 하는지 여부를 나타내는 플래그

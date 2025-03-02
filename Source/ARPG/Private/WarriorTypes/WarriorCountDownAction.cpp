@@ -3,10 +3,7 @@
 
 #include "WarriorTypes/WarriorCountDownAction.h"
 
-WarriorCountDownAction::WarriorCountDownAction()
+void FWarriorCountDownAction::CancelAction()
 {
-}
-
-WarriorCountDownAction::~WarriorCountDownAction()
-{
+	bNeedToCancel = true;
 }
