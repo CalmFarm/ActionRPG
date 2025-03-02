@@ -7,10 +7,10 @@
 
 class FWarriorCountDownAction : public FPendingLatentAction
 {
-	public:
+public:
 	FWarriorCountDownAction(float InTotalCountDownTime, float InUpdateInterval, float& InOutRemainingTime,
 	                        EWarriorCountDownActionOutput& InCountDownOutput, const FLatentActionInfo& LatentInfo)
-		                        : bNeedToCancel(false), TotalCountDownTime(InTotalCountDownTime),
+		                        : bNeedToCancel(false), TotalCountDownTime(InTotalCountDownTime), UpdateInterval(InUpdateInterval),
 		                          OutRemainingTime(InOutRemainingTime), CountDownOutput(InCountDownOutput),
 		                          ExecutionFunction(LatentInfo.ExecutionFunction), OutputLink(LatentInfo.Linkage),
 		                          CallbackTarget(LatentInfo.CallbackTarget), ElapsedInterval(0.f),
@@ -18,6 +18,8 @@ class FWarriorCountDownAction : public FPendingLatentAction
 	{
 	}
 
+	virtual void UpdateOperation(FLatentResponse& Response) override;
+	
 	void CancelAction();
 
 private:
