@@ -1,0 +1,25 @@
+// HS
+
+#pragma once
+
+#include "CoreMinimal.h"
+#include "GameFramework/Actor.h"
+#include "WarriorPickUpBase.generated.h"
+
+class USphereComponent;
+
+UCLASS()
+class ARPG_API AWarriorPickUpBase : public AActor
+{
+	GENERATED_BODY()
+	
+public:	
+	AWarriorPickUpBase();
+
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category= "Pick Up Intercation")
+	USphereComponent* PickUpCollisionSphere;
+
+	UFUNCTION()
+	virtual void OnPickUpCollisionSphereBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex,  bool bFromSweep, const FHitResult& SweepResult);
+};
