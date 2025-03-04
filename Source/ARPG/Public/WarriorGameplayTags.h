@@ -71,6 +71,7 @@ namespace WarriorGameplayTags
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Ability_Melee);
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Ability_Ranged);
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Ability_SummonEnemies);
+	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Ability_SpawnStone);
 	
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(Enemy_Weapon);
 
