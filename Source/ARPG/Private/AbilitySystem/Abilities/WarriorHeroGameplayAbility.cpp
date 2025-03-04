@@ -31,6 +31,11 @@ UHeroCombatComponent* UWarriorHeroGameplayAbility::GetHeroCombatComponentFromAct
 	return GetHeroCharacterFromActorInfo()->GetHeroCombatComponent();
 }
 
+UHeroPawnUIComponent* UWarriorHeroGameplayAbility::GetHeroPawnUIComponentFromActorInfo()
+{
+	return GetHeroCharacterFromActorInfo()->GetHeroUIComponent();
+}
+
 FGameplayEffectSpecHandle UWarriorHeroGameplayAbility::MakeHeroDamageEffectSpecHandle(
 	TSubclassOf<UGameplayEffect> EffectClass, float InWeaponBaseDamage, FGameplayTag InCurrentAttackTypeTag,
 	int32 InUsedComboCount)

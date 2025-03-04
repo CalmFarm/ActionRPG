@@ -6,6 +6,7 @@
 #include "AbilitySystem/Abilities/WarriorGameplayAbility.h"
 #include "WarriorHeroGameplayAbility.generated.h"
 
+class UHeroPawnUIComponent;
 class UHeroCombatComponent;
 class AWarriorHeroController;
 class AWarriorHeroCharacter;
@@ -26,6 +27,9 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "Warrior|Ability")
 	UHeroCombatComponent* GetHeroCombatComponentFromActorInfo();
+
+	UFUNCTION(BlueprintPure, Category = "Warrior|Ability")
+	UHeroPawnUIComponent* GetHeroPawnUIComponentFromActorInfo();
 
 	UFUNCTION(BlueprintPure, Category = "Warrior|Ability")
 	FGameplayEffectSpecHandle MakeHeroDamageEffectSpecHandle(TSubclassOf<UGameplayEffect> EffectClass,float InWeaponBaseDamage, FGameplayTag InCurrentAttackTypeTag, int32 InUsedComboCount);

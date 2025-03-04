@@ -13,6 +13,8 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAbilityIconSlotUpdateDelegate, F
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnAbilityCooldownBeginDelegate,FGameplayTag, AbilityInputTag,float,TotalColldownTime,float,RemainingCooldownTime);
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnStoneInteractedDelegate, bool, bShouldDisplayInputKey);
+
 /**
  * 
  */
@@ -33,4 +35,7 @@ public:
 
 	UPROPERTY(BlueprintCallable, BlueprintAssignable)
 	FOnAbilityCooldownBeginDelegate OnAbilityCooldownBeginDelegate;
+
+	UPROPERTY(BlueprintCallable, BlueprintAssignable)
+	FOnStoneInteractedDelegate OnStoneInteractedDelegate;
 };
