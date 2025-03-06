@@ -91,6 +91,7 @@ bool AWarriorSurvivorGameMode::HasFinishedAllWaves() const
 void AWarriorSurvivorGameMode::PreLoadNextWaveEnemies()
 {
 	if (HasFinishedAllWaves()) return;
+	PreLoadedEnemyClassMap.Empty();
 
 	for (const FWarriorEnemySpawnerInfo& SpawnerInfo : GetCurrentWaveSpawnerTableRow()->EnemyWaveSpawnerDefinitions)
 	{
@@ -103,9 +104,7 @@ void AWarriorSurvivorGameMode::PreLoadNextWaveEnemies()
 				{
 					if (UClass* LoadedEnemyClass = SpawnerInfo.SoftEnemyClassToSpawn.Get())
 					{
-						PreLoadedEnemyClass.Emplace(SpawnerInfo.SoftEnemyClassToSpawn, LoadedEnemyClass);
-						
-						Debug::Print(LoadedEnemyClass->GetName() + TEXT("is Loaded"));
+						PreLoadedEnemyClassMap.Emplace(SpawnerInfo.SoftEnemyClassToSpawn, LoadedEnemyClass);
 					}
 				}
 			));
@@ -143,7 +142,7 @@ int32 AWarriorSurvivorGameMode::TrySpawnWaveEnemies()
 
 		const int32 NumToSpawn = FMath::RandRange(SpawnerInfo.MinPerSpawn, SpawnerInfo.MaxPerSpawn);
 
-		UClass* LoadedEnemyClass = PreLoadedEnemyClass.FindChecked(SpawnerInfo.SoftEnemyClassToSpawn);
+		UClass* LoadedEnemyClass = PreLoadedEnemyClassMap.FindChecked(SpawnerInfo.SoftEnemyClassToSpawn);
 
 		for (int32 i = 0; i < NumToSpawn; i++)
 		{
@@ -160,6 +159,7 @@ int32 AWarriorSurvivorGameMode::TrySpawnWaveEnemies()
 
 			if (SpawnedEnemy)
 			{
+				SpawnedEnemy->OnDestroyed.AddUniqueDynamic(this, &ThisClass::OnEnemyDestroyed);
 				EnemiesSpawnedThisTime++;
 				TotalSpawnedEnemiesThisWaveCounter++;
 			}
@@ -176,5 +176,19 @@ int32 AWarriorSurvivorGameMode::TrySpawnWaveEnemies()
 bool AWarriorSurvivorGameMode::ShouldKeepSpawnEnemies() const
 {
 	return TotalSpawnedEnemiesThisWaveCounter < GetCurrentWaveSpawnerTableRow()->TotalEnemyToSpawnThisWave;
+}
+
+void AWarriorSurvivorGameMode::OnEnemyDestroyed(AActor* DestroyedActor)
+{
+	CurrentSpawnedEnemiesCounter--;
+
+	if (ShouldKeepSpawnEnemies())
+	{
+		CurrentSpawnedEnemiesCounter += TrySpawnWaveEnemies();
+	}
+	else if (CurrentSpawnedEnemiesCounter == 0)
+	{
+		SetCurrentSurvivorGameModeState(EWarriorSurvivorGameModeState::WaveComplete);
+	}
 }
 

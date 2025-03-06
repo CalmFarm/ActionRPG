@@ -67,6 +67,9 @@ private:
 	FWarriorEnemySpawnerTableRow* GetCurrentWaveSpawnerTableRow() const;
 	int32 TrySpawnWaveEnemies();
 	bool ShouldKeepSpawnEnemies() const;
+
+	UFUNCTION()
+	void OnEnemyDestroyed(AActor* DestroyedActor);
 	
 	UPROPERTY()
 	EWarriorSurvivorGameModeState CurrentSurvivorGameModeState;
@@ -105,5 +108,5 @@ private:
 	float WaveCompletedWaitTime = 5.f;
 
 	UPROPERTY()
-	TMap< TSoftClassPtr <AWarriorEnemyCharacter>, UClass*>  PreLoadedEnemyClass;
+	TMap< TSoftClassPtr <AWarriorEnemyCharacter>, UClass*>  PreLoadedEnemyClassMap;
 };
