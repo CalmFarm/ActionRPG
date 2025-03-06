@@ -13,5 +13,7 @@ UCLASS()
 class ARPG_API AWarriorBaseGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+
+public:
+	AWarriorBaseGameMode();
 };
