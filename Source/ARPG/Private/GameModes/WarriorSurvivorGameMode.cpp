@@ -197,3 +197,16 @@ void AWarriorSurvivorGameMode::OnEnemyDestroyed(AActor* DestroyedActor)
 	}
 }
 
+void AWarriorSurvivorGameMode::RegisterSpawnedEnemies(const TArray<AWarriorEnemyCharacter*>& InEnemiesToRegister)
+{
+	for (AWarriorEnemyCharacter* SpawnedEnemy : InEnemiesToRegister)
+	{
+		if (SpawnedEnemy)
+		{
+			CurrentSpawnedEnemiesCounter++;
+
+			SpawnedEnemy->OnDestroyed.AddUniqueDynamic(this, &ThisClass::OnEnemyDestroyed);
+		}
+	}
+}
+
