@@ -182,8 +182,6 @@ void AWarriorSurvivorGameMode::OnEnemyDestroyed(AActor* DestroyedActor)
 {
 	CurrentSpawnedEnemiesCounter--;
 	
-	Debug::Print(FString::Printf(TEXT("CurrentSpawnedEnemiesCounter: %i, TotalSpawnedEnemiesThisWave: %i"), CurrentSpawnedEnemiesCounter, TotalSpawnedEnemiesThisWaveCounter));
-
 	if (ShouldKeepSpawnEnemies())
 	{
 		CurrentSpawnedEnemiesCounter += TrySpawnWaveEnemies();
