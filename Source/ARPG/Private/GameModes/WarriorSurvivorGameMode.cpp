@@ -181,6 +181,8 @@ bool AWarriorSurvivorGameMode::ShouldKeepSpawnEnemies() const
 void AWarriorSurvivorGameMode::OnEnemyDestroyed(AActor* DestroyedActor)
 {
 	CurrentSpawnedEnemiesCounter--;
+	
+	Debug::Print(FString::Printf(TEXT("CurrentSpawnedEnemiesCounter: %i, TotalSpawnedEnemiesThisWave: %i"), CurrentSpawnedEnemiesCounter, TotalSpawnedEnemiesThisWaveCounter));
 
 	if (ShouldKeepSpawnEnemies())
 	{
@@ -188,6 +190,9 @@ void AWarriorSurvivorGameMode::OnEnemyDestroyed(AActor* DestroyedActor)
 	}
 	else if (CurrentSpawnedEnemiesCounter == 0)
 	{
+		TotalSpawnedEnemiesThisWaveCounter = 0;
+		CurrentSpawnedEnemiesCounter = 0;
+		
 		SetCurrentSurvivorGameModeState(EWarriorSurvivorGameModeState::WaveComplete);
 	}
 }
