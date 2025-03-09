@@ -8,6 +8,7 @@
 #include "WarriorTypes/WarriorEnumTypes.h"
 #include "WarriorFunctionLibrary.generated.h"
 
+class UWarriorGameInstance;
 struct FGameplayEffectSpecHandle;
 struct FScalableFloat;
 class UPawnCombatComponent;
@@ -59,5 +60,8 @@ public:
 	static void CountDown(const UObject* WorldContextObject, float TotalTime, float UpdateInterval,
 	                      float& OutRemainingTime, EWarriorCountDownActionInput CountDownInput,
 	                      UPARAM(DisplayName = "Output") EWarriorCountDownActionOutput& CountDownOutput, FLatentActionInfo LatentInfo);
+
+	UFUNCTION(BlueprintPure, Category = "Warrior|FunctionLibrary" , meta=(WorldContext = "WorldContextObject"))
+	static UWarriorGameInstance* GetWarriorGameInstance(UObject* WorldContextObject);
 };
 
