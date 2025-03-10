@@ -101,4 +101,6 @@ namespace WarriorGameplayTags
 	// Game Data Tags
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(GameData_Level_SurvivorGameModeMap);
 	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(GameData_Level_MainMenuMap);
+
+	ARPG_API UE_DECLARE_GAMEPLAY_TAG_EXTERN(GameData_SaveGame_Slot_1);
 }
