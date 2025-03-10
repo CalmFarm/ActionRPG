@@ -5,6 +5,7 @@
 
 #include "AbilitySystemBlueprintLibrary.h"
 #include "EnhancedInputSubsystems.h"
+#include "WarriorDebugHelper.h"
 #include "WarriorGameplayTags.h"
 #include "AbilitySystem/WarriorAbilitySystemComponent.h"
 #include "Camera/CameraComponent.h"
@@ -77,15 +78,19 @@ void AWarriorHeroCharacter::PossessedBy(AController* NewController)
 				{
 				case EWarriorGameDifficulty::Easy:
 					AbilityApplyLevel = 4;
+					Debug::Print(TEXT("Current Difficulty Easy"));
 					break;
 				case EWarriorGameDifficulty::Normal:
 					AbilityApplyLevel = 3;
+					Debug::Print(TEXT("Current Difficulty Normal"));
 					break;
 				case EWarriorGameDifficulty::Hard:
 					AbilityApplyLevel = 2;
+					Debug::Print(TEXT("Current Difficulty Hard"));
 					break;
 				case EWarriorGameDifficulty::VeryHard:
 					AbilityApplyLevel = 1;
+					Debug::Print(TEXT("Current Difficulty VeryHard"));
 					break;
 				default:
 					break;
